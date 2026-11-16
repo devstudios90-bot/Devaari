@@ -99,11 +99,12 @@ class ExtensionBridge: NSObject, WKScriptMessageHandler {
                 return
             }
             
-            webView.evaluateJavaScript(script, in: nil, in: .page) { result, error in
-                if let error = error {
+            webView.evaluateJavaScript(script, in: nil, in: .page) { evalResult in
+                switch evalResult {
+                case .success(let val):
+                    self.sendResult(callId: callId, result: val)
+                case .failure(let error):
                     self.sendError(callId: callId, error: error.localizedDescription)
-                } else {
-                    self.sendResult(callId: callId, result: result)
                 }
             }
         }
