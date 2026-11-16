@@ -100,20 +100,11 @@ struct SidePanelWebViewRepresentable: UIViewRepresentable {
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
         
-        // Register Native Devaari Bridge cleanly
-        config.userContentController.removeScriptMessageHandler(forName: "devaariBridge")
+        // Register Native Devaari Bridge
         config.userContentController.add(browserManager.extensionBridge, name: "devaariBridge")
         
         let webView = WKWebView(frame: .zero, configuration: config)
-        webView.navigationDelegate = context.coordinator
         browserManager.extensionBridge.sidePanelWebView = webView
-        
-        // Anti-zoom & touch optimizations for iPad
-        webView.scrollView.isScrollEnabled = true
-        webView.scrollView.bounces = false
-        webView.scrollView.maximumZoomScale = 1.0
-        webView.scrollView.minimumZoomScale = 1.0
-        webView.scrollView.pinchGestureRecognizer?.isEnabled = false
         
         loadSidePanelHTML(into: webView)
         return webView
@@ -121,16 +112,6 @@ struct SidePanelWebViewRepresentable: UIViewRepresentable {
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
         // Kept alive
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-    
-    class Coordinator: NSObject, WKNavigationDelegate {
-        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-            webView.reload()
-        }
     }
     
     private func loadSidePanelHTML(into webView: WKWebView) {

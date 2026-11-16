@@ -10,7 +10,7 @@
 </head>
 <body>
   <!-- Sign-in gate (covers everything until the user is signed in) -->
-  <div id="authGate" class="auth-gate" hidden style="display: none !important;">
+  <div id="authGate" class="auth-gate">
     <div class="auth-card">
       <div class="brand auth-brand">
         <span class="brand-title">TryAIToday Flow Automator</span>
@@ -580,6 +580,6 @@
        so globalThis.__inj exists. Kept un-obfuscated (see inject.js / build.mjs). -->
   <script src="inject.js"></script>
   <script src="wm.js"></script>
-  <script src="sidepanel.js"></script>
+  <script type="module" src="sidepanel.js"></script>
 </body>
 </html>
