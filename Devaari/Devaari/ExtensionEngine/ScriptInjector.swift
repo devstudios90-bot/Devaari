@@ -16,24 +16,33 @@ class ScriptInjector {
     }
     
     private func loadBundledScripts() {
-        if let recapPath = Bundle.main.path(forResource: "recap-capture", ofType: "js", inDirectory: "ExtensionAssets") {
-            recapCaptureScript = (try? String(contentsOfFile: recapPath, encoding: .utf8)) ?? ""
+        let bundleURL = Bundle.main.bundleURL
+        let assetsDir = bundleURL.appendingPathComponent("ExtensionAssets")
+        
+        func readFile(_ relPath: String) -> String {
+            let fileURL = assetsDir.appendingPathComponent(relPath)
+            if FileManager.default.fileExists(atPath: fileURL.path),
+               let str = try? String(contentsOf: fileURL, encoding: .utf8) {
+                return str
+            }
+            let filename = (relPath as NSString).lastPathComponent
+            let nameWithoutExt = (filename as NSString).deletingPathExtension
+            let ext = (filename as NSString).pathExtension
+            if let fallbackPath = Bundle.main.path(forResource: nameWithoutExt, ofType: ext, inDirectory: "ExtensionAssets") {
+                return (try? String(contentsOfFile: fallbackPath, encoding: .utf8)) ?? ""
+            }
+            if let rootPath = Bundle.main.path(forResource: nameWithoutExt, ofType: ext) {
+                return (try? String(contentsOfFile: rootPath, encoding: .utf8)) ?? ""
+            }
+            return ""
         }
-        if let injectPath = Bundle.main.path(forResource: "inject", ofType: "js", inDirectory: "ExtensionAssets") {
-            injectHelpersScript = (try? String(contentsOfFile: injectPath, encoding: .utf8)) ?? ""
-        }
-        if let wmDetectPath = Bundle.main.path(forResource: "wm-detect", ofType: "js", inDirectory: "ExtensionAssets/vendor") {
-            wmDetectScript = (try? String(contentsOfFile: wmDetectPath, encoding: .utf8)) ?? ""
-        }
-        if let wmPath = Bundle.main.path(forResource: "wm", ofType: "js", inDirectory: "ExtensionAssets") {
-            wmScript = (try? String(contentsOfFile: wmPath, encoding: .utf8)) ?? ""
-        }
-        if let flowInjectPath = Bundle.main.path(forResource: "flow-inject", ofType: "js", inDirectory: "ExtensionAssets") {
-            flowInjectScript = (try? String(contentsOfFile: flowInjectPath, encoding: .utf8)) ?? ""
-        }
-        if let flowCSSPath = Bundle.main.path(forResource: "flow-inject", ofType: "css", inDirectory: "ExtensionAssets") {
-            flowInjectCSS = (try? String(contentsOfFile: flowCSSPath, encoding: .utf8)) ?? ""
-        }
+        
+        recapCaptureScript = readFile("recap-capture.js")
+        injectHelpersScript = readFile("inject.js")
+        wmDetectScript = readFile("vendor/wm-detect.js")
+        wmScript = readFile("wm.js")
+        flowInjectScript = readFile("flow-inject.js")
+        flowInjectCSS = readFile("flow-inject.css")
     }
     
     func configureUserContentController(_ contentController: WKUserContentController) {

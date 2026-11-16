@@ -34,6 +34,9 @@ struct MainBrowserView: View {
                 }
             }
         }
+        .onAppear {
+            browserManager.setupInitialTabIfNeeded()
+        }
         .sheet(isPresented: $browserManager.isShowingBookmarksSheet) {
             BookmarksSheetView()
                 .environmentObject(browserManager)

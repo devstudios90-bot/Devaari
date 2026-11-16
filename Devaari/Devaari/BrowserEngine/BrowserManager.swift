@@ -24,8 +24,10 @@ class BrowserManager: ObservableObject {
     init() {
         self.extensionBridge = ExtensionBridge(browserManager: self)
         loadSavedData()
-        
-        // Open initial tab to Google Flow
+    }
+    
+    func setupInitialTabIfNeeded() {
+        guard tabs.isEmpty else { return }
         createNewTab(url: URL(string: "https://flow.google.com"))
     }
     
@@ -55,7 +57,7 @@ class BrowserManager: ObservableObject {
     func closeTab(id: UUID) {
         guard let index = tabs.firstIndex(where: { $0.id == id }) else { return }
         
-        tabs[index].webView.stopLoading()
+        tabs[index].webView?.stopLoading()
         tabs.remove(at: index)
         
         if tabs.isEmpty {
@@ -85,20 +87,20 @@ class BrowserManager: ObservableObject {
             targetURL = URL(string: "https://www.google.com/search?q=\(encoded)")!
         }
         
-        tab.webView.load(URLRequest(url: targetURL))
+        tab.webView?.load(URLRequest(url: targetURL))
         addToHistory(title: tab.title, url: targetURL.absoluteString)
     }
     
     func reloadActiveTab() {
-        activeTab?.webView.reload()
+        activeTab?.webView?.reload()
     }
     
     func goBackActiveTab() {
-        activeTab?.webView.goBack()
+        activeTab?.webView?.goBack()
     }
     
     func goForwardActiveTab() {
-        activeTab?.webView.goForward()
+        activeTab?.webView?.goForward()
     }
     
     func toggleSidePanel() {

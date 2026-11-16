@@ -99,9 +99,9 @@ struct SidePanelWebViewRepresentable: UIViewRepresentable {
         let config = WKWebViewConfiguration()
         config.allowsInlineMediaPlayback = true
         config.mediaTypesRequiringUserActionForPlayback = []
-        config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         
-        // Register Native Devaari Bridge
+        // Register Native Devaari Bridge cleanly
+        config.userContentController.removeScriptMessageHandler(forName: "devaariBridge")
         config.userContentController.add(browserManager.extensionBridge, name: "devaariBridge")
         
         let webView = WKWebView(frame: .zero, configuration: config)
@@ -116,19 +116,21 @@ struct SidePanelWebViewRepresentable: UIViewRepresentable {
     }
     
     private func loadSidePanelHTML(into webView: WKWebView) {
-        if let assetsURL = Bundle.main.url(forResource: "ExtensionAssets", withExtension: nil) {
-            let htmlURL = assetsURL.appendingPathComponent("sidepanel.html")
-            webView.loadFileURL(htmlURL, allowingReadAccessTo: assetsURL)
+        let bundleURL = Bundle.main.bundleURL
+        let assetsDir = bundleURL.appendingPathComponent("ExtensionAssets")
+        let htmlURL = assetsDir.appendingPathComponent("sidepanel.html")
+        
+        if FileManager.default.fileExists(atPath: htmlURL.path) {
+            webView.loadFileURL(htmlURL, allowingReadAccessTo: assetsDir)
         } else if let fallbackHTML = Bundle.main.url(forResource: "sidepanel", withExtension: "html") {
             let parentDir = fallbackHTML.deletingLastPathComponent()
             webView.loadFileURL(fallbackHTML, allowingReadAccessTo: parentDir)
         } else {
-            // Local fallback template if bundle not fully assembled yet
             let errorHTML = """
             <!DOCTYPE html>
             <html>
             <head><meta name="viewport" content="width=device-width, initial-scale=1"></head>
-            <body style="font-family: -apple-system; padding: 24px; color: #444; text-align: center;">
+            <body style="font-family: -apple-system; padding: 24px; color: #fff; background: #121212; text-align: center;">
                 <h3>TryAIToday Flow Automator</h3>
                 <p>Loading extension assets...</p>
             </body>
