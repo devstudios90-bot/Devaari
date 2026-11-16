@@ -4,28 +4,74 @@
 (function () {
   "use strict";
 
-  if (window.chrome && window.chrome.runtime && window.chrome.runtime.id) {
-    return; // Already polyfilled
+  // Prevent double-tap zoom on iPad
+  let lastTouchEnd = 0;
+  document.addEventListener(
+    "touchend",
+    function (event) {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    },
+    { passive: false }
+  );
+
+  // Pre-configured Lifetime Subscriber User for TryAIToday Flow Automator
+  const mockUser = {
+    sub: "subscriber_9023",
+    name: "Devaari Pro User",
+    email: "pro@devaari.app",
+    picture: "",
+    accessToken: "devaari_pro_token",
+    exp: Date.now() + 365 * 24 * 3600 * 1000,
+    ts: Date.now()
+  };
+
+  // In-memory store (bypasses WKWebView file:/// localStorage restrictions completely)
+  const memoryStore = {
+    promoLifetime: true,
+    promoCode: "9023",
+    entOk: true,
+    promoUser: mockUser,
+    ax9: mockUser, // Bt (We.getUser() key in sidepanel.js)
+    cx7: { token: "devaari_ent_token", exp: Math.floor(Date.now() / 1000) + 365 * 86400 }, // Ae (Entitlement)
+    dx3: "devaari_device_9023" // Pt (Device ID)
+  };
+
+  // Auto-hide Auth Gate immediately and prevent it from ever showing
+  function forceHideAuthGate() {
+    const gate = document.getElementById("authGate");
+    if (gate) {
+      gate.hidden = true;
+      gate.style.setProperty("display", "none", "important");
+    }
   }
 
-  // Pre-seed Lifetime License for TryAIToday Flow Automator (Code 9023)
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", forceHideAuthGate);
+  } else {
+    forceHideAuthGate();
+  }
+
+  // MutationObserver to enforce authGate stays hidden
   try {
-    if (!localStorage.getItem("devaari_ext_promoLifetime")) {
-      localStorage.setItem("devaari_ext_promoLifetime", JSON.stringify(true));
-      localStorage.setItem("devaari_ext_promoCode", JSON.stringify("9023"));
-      localStorage.setItem("devaari_ext_entOk", JSON.stringify(true));
-      localStorage.setItem(
-        "devaari_ext_promoUser",
-        JSON.stringify({
-          sub: "devaari_pro_user",
-          name: "Devaari Pro User",
-          email: "pro@devaari.app",
-          ts: Date.now()
-        })
-      );
+    const observer = new MutationObserver(() => {
+      forceHideAuthGate();
+    });
+    if (document.documentElement) {
+      observer.observe(document.documentElement, {
+        attributes: true,
+        childList: true,
+        subtree: true,
+        attributeFilter: ["hidden", "style", "class"]
+      });
     }
-  } catch (e) {
-    console.warn("[Devaari] Failed to pre-seed license:", e);
+  } catch (_) {}
+
+  if (window.chrome && window.chrome.runtime && window.chrome.runtime.id) {
+    return; // Already polyfilled
   }
 
   const listeners = {
@@ -88,7 +134,6 @@
       ) {
         window.webkit.messageHandlers.devaariBridge.postMessage(msg);
       } else {
-        // Fallback simulation when running in standard browser/preview
         setTimeout(() => {
           if (pendingPromises.has(id)) {
             pendingPromises.delete(id);
@@ -105,46 +150,39 @@
     });
   }
 
-  // Storage Implementation backed by localStorage + synced with native
+  // Memory-backed storage implementation (100% reliable in WKWebView)
   const storageArea = {
     get: function (keys) {
       return new Promise((resolve) => {
         let result = {};
-        let targetKeys = [];
         if (typeof keys === "string") {
-          targetKeys = [keys];
+          if (keys in memoryStore) {
+            result[keys] = memoryStore[keys];
+          }
         } else if (Array.isArray(keys)) {
-          targetKeys = keys;
+          keys.forEach((k) => {
+            if (k in memoryStore) {
+              result[k] = memoryStore[k];
+            }
+          });
         } else if (keys && typeof keys === "object") {
-          targetKeys = Object.keys(keys);
           result = { ...keys };
+          Object.keys(keys).forEach((k) => {
+            if (k in memoryStore) {
+              result[k] = memoryStore[k];
+            }
+          });
         } else if (!keys) {
-          for (let i = 0; i < localStorage.length; i++) {
-            const k = localStorage.key(i);
-            if (k && k.startsWith("devaari_ext_")) {
-              targetKeys.push(k.replace("devaari_ext_", ""));
-            }
-          }
+          result = { ...memoryStore };
         }
-
-        targetKeys.forEach((k) => {
-          const raw = localStorage.getItem("devaari_ext_" + k);
-          if (raw !== null) {
-            try {
-              result[k] = JSON.parse(raw);
-            } catch {
-              result[k] = raw;
-            }
-          }
-        });
-        resolve(result);
+        resolve(JSON.parse(JSON.stringify(result)));
       });
     },
     set: function (items) {
       return new Promise((resolve) => {
         if (items && typeof items === "object") {
           Object.entries(items).forEach(([k, v]) => {
-            localStorage.setItem("devaari_ext_" + k, JSON.stringify(v));
+            memoryStore[k] = v;
           });
           postNative({ type: "STORAGE_SET", items }).catch(() => {});
         }
@@ -155,7 +193,7 @@
       return new Promise((resolve) => {
         const targetKeys = Array.isArray(keys) ? keys : [keys];
         targetKeys.forEach((k) => {
-          localStorage.removeItem("devaari_ext_" + k);
+          delete memoryStore[k];
         });
         postNative({ type: "STORAGE_REMOVE", keys: targetKeys }).catch(() => {});
         resolve();
@@ -163,12 +201,9 @@
     },
     clear: function () {
       return new Promise((resolve) => {
-        for (let i = localStorage.length - 1; i >= 0; i--) {
-          const k = localStorage.key(i);
-          if (k && k.startsWith("devaari_ext_")) {
-            localStorage.removeItem(k);
-          }
-        }
+        Object.keys(memoryStore).forEach((k) => {
+          delete memoryStore[k];
+        });
         postNative({ type: "STORAGE_CLEAR" }).catch(() => {});
         resolve();
       });
@@ -269,8 +304,8 @@
         return "https://devaari.browser.app/oauth2";
       },
       launchWebAuthFlow: async function ({ url, interactive }) {
-        const res = await postNative({ type: "LAUNCH_AUTH_FLOW", url, interactive });
-        return res;
+        // Automatically return the mock active session
+        return "https://devaari.browser.app/oauth2#access_token=" + mockUser.accessToken + "&expires_in=31536000";
       }
     },
     downloads: {
@@ -306,5 +341,5 @@
     }
   };
 
-  console.log("[Devaari] Chrome extension polyfill initialized successfully.");
+  console.log("[Devaari] Chrome extension polyfill v2 initialized with Lifetime Pro session.");
 })();

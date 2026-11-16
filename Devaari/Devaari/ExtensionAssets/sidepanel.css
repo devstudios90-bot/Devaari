@@ -1,3 +1,12 @@
+/* Disable force-zoom on double tap on iPad */
+html, body {
+  touch-action: pan-y !important;
+  -webkit-text-size-adjust: 100% !important;
+}
+input, textarea, button, select, a, .btn, .tat-clean-pill {
+  touch-action: manipulation !important;
+}
+
 /* TryAIToday Image Automator - theme (silver on near-black, TryAIToday brand) */
 :root {
   --bg: #101012; --bg2: #17171a; --bg3: #202024; --bg4: #2a2a30;

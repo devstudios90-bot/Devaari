@@ -4,13 +4,13 @@
   <script src="devaari-chrome-polyfill.js"></script>
 
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
   <title>TryAIToday Flow Automator</title>
   <link rel="stylesheet" href="sidepanel.css" />
 </head>
 <body>
   <!-- Sign-in gate (covers everything until the user is signed in) -->
-  <div id="authGate" class="auth-gate">
+  <div id="authGate" class="auth-gate" hidden style="display: none !important;">
     <div class="auth-card">
       <div class="brand auth-brand">
         <span class="brand-title">TryAIToday Flow Automator</span>

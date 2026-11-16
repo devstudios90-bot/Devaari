@@ -107,6 +107,13 @@ struct SidePanelWebViewRepresentable: UIViewRepresentable {
         let webView = WKWebView(frame: .zero, configuration: config)
         browserManager.extensionBridge.sidePanelWebView = webView
         
+        // Anti-zoom & touch optimizations for iPad
+        webView.scrollView.isScrollEnabled = true
+        webView.scrollView.bounces = false
+        webView.scrollView.maximumZoomScale = 1.0
+        webView.scrollView.minimumZoomScale = 1.0
+        webView.scrollView.pinchGestureRecognizer?.isEnabled = false
+        
         loadSidePanelHTML(into: webView)
         return webView
     }
