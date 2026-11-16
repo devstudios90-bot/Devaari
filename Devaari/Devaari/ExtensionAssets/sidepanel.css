@@ -861,3 +861,15 @@ body[data-gen-mode="video"] #imgRefMapRow { display: none; } /* per-prompt image
   font-size: 12px;
   font-weight: 600;
 }
+
+
+/* Devaari Testing Mode: Force hide authGate and tour overlays */
+#authGate, .auth-gate {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+#tourOverlay, #tourSpot, #tourCard {
+  display: none !important;
+  pointer-events: none !important;
+}

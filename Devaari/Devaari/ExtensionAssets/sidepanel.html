@@ -7,10 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
   <title>TryAIToday Flow Automator</title>
   <link rel="stylesheet" href="sidepanel.css" />
+  <style>
+    #authGate, .auth-gate {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+    #tourOverlay, #tourSpot, #tourCard {
+      display: none !important;
+      pointer-events: none !important;
+    }
+  </style>
 </head>
 <body>
   <!-- Sign-in gate (covers everything until the user is signed in) -->
-  <div id="authGate" class="auth-gate">
+  <div id="authGate" class="auth-gate" hidden style="display: none !important; visibility: hidden !important; pointer-events: none !important;">
     <div class="auth-card">
       <div class="brand auth-brand">
         <span class="brand-title">TryAIToday Flow Automator</span>
