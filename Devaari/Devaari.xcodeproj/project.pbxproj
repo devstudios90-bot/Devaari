@@ -1,0 +1,268 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		215BFE9AF26540119A3F5BC9 /* DevaariApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E405F86DB04341A5D94C57 /* DevaariApp.swift */; };
+		DED7EAEC02A64247B3C89F1E /* BrowserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EA9E92EDDC4ADEA7CD07FC /* BrowserModel.swift */; };
+		889DFCD1B37544A29440EB02 /* BrowserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8D98C780844843AB479989 /* BrowserManager.swift */; };
+		240BD73A1180442DB145729A /* ScriptInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FD2EFFCF1C4C0D8E17E8D7 /* ScriptInjector.swift */; };
+		584A588517EB4814A6E11F46 /* ExtensionBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6255419D72A49A196DAA37D /* ExtensionBridge.swift */; };
+		E4A340EED92241DE89481CF6 /* WebViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FED2A93D915423E80DD82B0 /* WebViewContainer.swift */; };
+		F7F67EA5117C47589F2B7B73 /* SidePanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85679FFA81374765AF42E730 /* SidePanelView.swift */; };
+		FE45FC6ACB8D4583AB799D60 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC40D72562B4A138A3C3309 /* TabBarView.swift */; };
+		20F806685DA9428D811623A6 /* AddressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBB73EBCC71452DBC5E97BA /* AddressBarView.swift */; };
+		0FDEBF0D3F9B4F53B56923E6 /* BookmarksAndDownloadsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1396635BA54410BBCFED12E /* BookmarksAndDownloadsViews.swift */; };
+		6F27F41E37974009BC6160DA /* MainBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38971080FD244C7E9DE0F2DF /* MainBrowserView.swift */; };
+		30F0A19587D4425C98216D1B /* ExtensionAssets in Resources */ = {isa = PBXBuildFile; fileRef = 16033A8CF6C341EBA4B4C2EC /* ExtensionAssets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B2D7E6E2CF9C4DC3AEEB0B4A /* Devaari.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Devaari.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		05E405F86DB04341A5D94C57 /* DevaariApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/App/DevaariApp.swift"; sourceTree = "<group>"; };
+		05EA9E92EDDC4ADEA7CD07FC /* BrowserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/BrowserEngine/BrowserModel.swift"; sourceTree = "<group>"; };
+		2E8D98C780844843AB479989 /* BrowserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/BrowserEngine/BrowserManager.swift"; sourceTree = "<group>"; };
+		58FD2EFFCF1C4C0D8E17E8D7 /* ScriptInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/ExtensionEngine/ScriptInjector.swift"; sourceTree = "<group>"; };
+		C6255419D72A49A196DAA37D /* ExtensionBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/ExtensionEngine/ExtensionBridge.swift"; sourceTree = "<group>"; };
+		0FED2A93D915423E80DD82B0 /* WebViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/Views/WebViewContainer.swift"; sourceTree = "<group>"; };
+		85679FFA81374765AF42E730 /* SidePanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/Views/SidePanelView.swift"; sourceTree = "<group>"; };
+		EFC40D72562B4A138A3C3309 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/Views/TabBarView.swift"; sourceTree = "<group>"; };
+		8DBB73EBCC71452DBC5E97BA /* AddressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/Views/AddressBarView.swift"; sourceTree = "<group>"; };
+		B1396635BA54410BBCFED12E /* BookmarksAndDownloadsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/Views/BookmarksAndDownloadsViews.swift"; sourceTree = "<group>"; };
+		38971080FD244C7E9DE0F2DF /* MainBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Devaari/Views/MainBrowserView.swift"; sourceTree = "<group>"; };
+		30EBBD27A71A4DC9B35F22E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Devaari/Resources/Info.plist"; sourceTree = "<group>"; };
+		16033A8CF6C341EBA4B4C2EC /* ExtensionAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Devaari/ExtensionAssets"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		761CED49311A43C4A34EDC0D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		697935C0479144E5A53EA6C8 = {
+			isa = PBXGroup;
+			children = (
+				05E405F86DB04341A5D94C57 /* DevaariApp.swift */,
+				05EA9E92EDDC4ADEA7CD07FC /* BrowserModel.swift */,
+				2E8D98C780844843AB479989 /* BrowserManager.swift */,
+				58FD2EFFCF1C4C0D8E17E8D7 /* ScriptInjector.swift */,
+				C6255419D72A49A196DAA37D /* ExtensionBridge.swift */,
+				0FED2A93D915423E80DD82B0 /* WebViewContainer.swift */,
+				85679FFA81374765AF42E730 /* SidePanelView.swift */,
+				EFC40D72562B4A138A3C3309 /* TabBarView.swift */,
+				8DBB73EBCC71452DBC5E97BA /* AddressBarView.swift */,
+				B1396635BA54410BBCFED12E /* BookmarksAndDownloadsViews.swift */,
+				38971080FD244C7E9DE0F2DF /* MainBrowserView.swift */,
+				30EBBD27A71A4DC9B35F22E7 /* Info.plist */,
+				16033A8CF6C341EBA4B4C2EC /* ExtensionAssets */,
+				F8AFFCCDF53A42E3A36E7EAB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F8AFFCCDF53A42E3A36E7EAB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B2D7E6E2CF9C4DC3AEEB0B4A /* Devaari.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A85370DBFF924F51AF8A8621 /* Devaari */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5260487835F4982A15786A2 /* Build configuration list for PBXNativeTarget "Devaari" */;
+			buildPhases = (
+				298A34595F0046A38CFAE8C2 /* Sources */,
+				761CED49311A43C4A34EDC0D /* Frameworks */,
+				88412C49FF744035A302B95C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Devaari;
+			productName = Devaari;
+			productReference = B2D7E6E2CF9C4DC3AEEB0B4A /* Devaari.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08067DDB95574A6B88F3FEAF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A85370DBFF924F51AF8A8621 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = B5EEAF84EE034E28A539FF6B /* Build configuration list for PBXProject "Devaari" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 697935C0479144E5A53EA6C8;
+			productRefGroup = F8AFFCCDF53A42E3A36E7EAB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A85370DBFF924F51AF8A8621 /* Devaari */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		88412C49FF744035A302B95C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30F0A19587D4425C98216D1B /* ExtensionAssets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		298A34595F0046A38CFAE8C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				215BFE9AF26540119A3F5BC9 /* DevaariApp.swift in Sources */,
+				DED7EAEC02A64247B3C89F1E /* BrowserModel.swift in Sources */,
+				889DFCD1B37544A29440EB02 /* BrowserManager.swift in Sources */,
+				240BD73A1180442DB145729A /* ScriptInjector.swift in Sources */,
+				584A588517EB4814A6E11F46 /* ExtensionBridge.swift in Sources */,
+				E4A340EED92241DE89481CF6 /* WebViewContainer.swift in Sources */,
+				F7F67EA5117C47589F2B7B73 /* SidePanelView.swift in Sources */,
+				FE45FC6ACB8D4583AB799D60 /* TabBarView.swift in Sources */,
+				20F806685DA9428D811623A6 /* AddressBarView.swift in Sources */,
+				0FDEBF0D3F9B4F53B56923E6 /* BookmarksAndDownloadsViews.swift in Sources */,
+				6F27F41E37974009BC6160DA /* MainBrowserView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4E894640196D4ACC839D69FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		227EA56E93C84D07BAB53609 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		5D0A208A0E374A9BB771D74C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Devaari/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tryaitoday.devaari;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		92C689321666492889035A4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Devaari/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tryaitoday.devaari;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B5EEAF84EE034E28A539FF6B /* Build configuration list for PBXProject "Devaari" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E894640196D4ACC839D69FA /* Debug */,
+				227EA56E93C84D07BAB53609 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5260487835F4982A15786A2 /* Build configuration list for PBXNativeTarget "Devaari" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D0A208A0E374A9BB771D74C /* Debug */,
+				92C689321666492889035A4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 08067DDB95574A6B88F3FEAF /* Project object */;
+}
