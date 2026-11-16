@@ -105,6 +105,7 @@ struct SidePanelWebViewRepresentable: UIViewRepresentable {
         config.userContentController.add(browserManager.extensionBridge, name: "devaariBridge")
         
         let webView = WKWebView(frame: .zero, configuration: config)
+        webView.navigationDelegate = context.coordinator
         browserManager.extensionBridge.sidePanelWebView = webView
         
         // Anti-zoom & touch optimizations for iPad
@@ -120,6 +121,16 @@ struct SidePanelWebViewRepresentable: UIViewRepresentable {
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
         // Kept alive
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+    
+    class Coordinator: NSObject, WKNavigationDelegate {
+        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+            webView.reload()
+        }
     }
     
     private func loadSidePanelHTML(into webView: WKWebView) {

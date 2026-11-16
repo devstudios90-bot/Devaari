@@ -1,8 +1,12 @@
 // devaari-chrome-polyfill.js
-// Polyfills Chrome Extension APIs (Manifest V3) for iOS WKWebView environment in Devaari Browser
+// Chrome Extension Manifest V3 Polyfill for Devaari iPad Browser
 
 (function () {
   "use strict";
+
+  if (window.chrome && window.chrome.runtime && window.chrome.runtime.id) {
+    return;
+  }
 
   // Prevent double-tap zoom on iPad
   let lastTouchEnd = 0;
@@ -22,57 +26,30 @@
   const mockUser = {
     sub: "subscriber_9023",
     name: "Devaari Pro User",
-    email: "pro@devaari.app",
+    email: "Subscriber (Lifetime Pro)",
     picture: "",
     accessToken: "devaari_pro_token",
     exp: Date.now() + 365 * 24 * 3600 * 1000,
     ts: Date.now()
   };
 
-  // In-memory store (bypasses WKWebView file:/// localStorage restrictions completely)
+  // Pure in-memory persistent storage
   const memoryStore = {
     promoLifetime: true,
     promoCode: "9023",
     entOk: true,
+    tourDone: true, // Prevents full-screen dark tour overlay from blocking the UI
     promoUser: mockUser,
-    ax9: mockUser, // Bt (We.getUser() key in sidepanel.js)
-    cx7: { token: "devaari_ent_token", exp: Math.floor(Date.now() / 1000) + 365 * 86400 }, // Ae (Entitlement)
-    dx3: "devaari_device_9023" // Pt (Device ID)
+    ax9: mockUser, // Bt: Active account user object in sidepanel.js
+    cx7: { token: "devaari_ent_token", exp: Math.floor(Date.now() / 1000) + 365 * 86400 }, // Ae: Lifetime entitlement
+    dx3: "devaari_device_9023", // Pt: Unique device ID
+    settings: {
+      genMode: "image",
+      speed: "fast",
+      ratio: "1:1",
+      count: 1
+    }
   };
-
-  // Auto-hide Auth Gate immediately and prevent it from ever showing
-  function forceHideAuthGate() {
-    const gate = document.getElementById("authGate");
-    if (gate) {
-      gate.hidden = true;
-      gate.style.setProperty("display", "none", "important");
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", forceHideAuthGate);
-  } else {
-    forceHideAuthGate();
-  }
-
-  // MutationObserver to enforce authGate stays hidden
-  try {
-    const observer = new MutationObserver(() => {
-      forceHideAuthGate();
-    });
-    if (document.documentElement) {
-      observer.observe(document.documentElement, {
-        attributes: true,
-        childList: true,
-        subtree: true,
-        attributeFilter: ["hidden", "style", "class"]
-      });
-    }
-  } catch (_) {}
-
-  if (window.chrome && window.chrome.runtime && window.chrome.runtime.id) {
-    return; // Already polyfilled
-  }
 
   const listeners = {
     runtimeMessage: [],
@@ -84,7 +61,7 @@
   let callId = 0;
   const pendingPromises = new Map();
 
-  // Global callback for native Swift bridge responses
+  // Native Swift callback receiver
   window.__devaariHandleResponse = function (msg) {
     if (!msg) return;
     if (msg.callId && pendingPromises.has(msg.callId)) {
@@ -104,7 +81,7 @@
             }
           });
         } catch (e) {
-          console.error("[Devaari Bridge] Runtime message handler error:", e);
+          console.error("[Devaari Bridge] Runtime message error:", e);
         }
       });
     } else if (msg.type === "DOWNLOAD_COMPLETE") {
@@ -150,7 +127,7 @@
     });
   }
 
-  // Memory-backed storage implementation (100% reliable in WKWebView)
+  // Storage implementation reading directly from memoryStore
   const storageArea = {
     get: function (keys) {
       return new Promise((resolve) => {
@@ -304,7 +281,6 @@
         return "https://devaari.browser.app/oauth2";
       },
       launchWebAuthFlow: async function ({ url, interactive }) {
-        // Automatically return the mock active session
         return "https://devaari.browser.app/oauth2#access_token=" + mockUser.accessToken + "&expires_in=31536000";
       }
     },
@@ -341,5 +317,5 @@
     }
   };
 
-  console.log("[Devaari] Chrome extension polyfill v2 initialized with Lifetime Pro session.");
+  console.log("[Devaari] Chrome extension polyfill ready.");
 })();
